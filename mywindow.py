@@ -41,31 +41,39 @@ class myWindow:
     def add_text(self, some_text, anchor):  # anchor? align text: 'w' => right 'e' => left 'center' => center
         my_text = tk.Label(self.window, text=some_text, bg=self.bg_hex_color, fg=self.text_color,
                            font=("Arial", 12, "bold"), anchor=anchor)
-        my_text.pack(fill='both')
         return my_text
 
-    def add_dropdown(self, my_list, width, command=None):
+    def add_dropdown(self, my_list, width):
         var = tk.StringVar(self.window)
         var.set(my_list[0])
-        dropdown = tk.OptionMenu(self.window, var, *my_list)
+        dropdown = tk.OptionMenu(self.window, var, *my_list, command=lambda x: get_dropdown_value(var))
         dropdown.config(bg=self.bg_hex_color, fg=self.text_color, font=("Arial", 10, "bold"),
                         activeforeground=self.bg_hex_color, width=width, direction='right')
-        if command is not None:
-            dropdown.config(command=command)
 
         dropdown["menu"].configure(bg=self.bg_hex_color, activebackground='#4c1b45', fg=self.text_color)
-        dropdown.pack()
-        return dropdown, var
+        return dropdown
+
+    def special_main_window_dropdown(self, my_list, width, my_dropdown, my_field):
+        var = tk.StringVar(self.window)
+        var.set(my_list[0])
+
+        dropdown = tk.OptionMenu(self.window, var, *my_list,
+                                 command=lambda x: set_method(var, my_list, my_dropdown, my_field))
+
+        dropdown.config(bg=self.bg_hex_color, fg=self.text_color, font=("Arial", 10, "bold"),
+                        activeforeground=self.bg_hex_color, width=width, direction='right')
+
+        dropdown["menu"].configure(bg=self.bg_hex_color, activebackground='#4c1b45', fg=self.text_color)
+        return dropdown
 
     def add_input_field(self, width):
-        field = tk.Entry(self.window, width=width, font=("Arial", 12, "bold"), fg='#4c1b45')
-        field.pack()
+        field = tk.Entry(self.window, width=width, font=("Arial", 12, "bold"), fg='#4c1b45',
+                         disabledbackground='#4c1b45')
         return field
 
     def add_button(self, button_text):
         button = tk.Button(self.window, text=button_text, bg=self.bg_hex_color, font=("Arial", 10, "bold"),
                            fg=self.text_color, activeforeground=self.bg_hex_color, relief="groove", bd=5)
-        button.pack()
         return button
 
 
@@ -79,3 +87,29 @@ def add_padding(my_object, padx, pady):
 
 def disable_object(my_object):
     my_object.config(state="disabled")
+
+
+def enable_object(my_object):
+    my_object.config(state="normal")
+
+
+def get_dropdown_value(var):
+    temp = var.get()
+    return temp
+
+
+def set_method(var, methods, my_dropdown, my_input_field):
+    temp = var.get()
+    print("t")
+    if temp == methods[0]:
+        print("0")
+        disable_object(my_dropdown)
+        disable_object(my_input_field)
+    elif temp == methods[1]:
+        print("1")
+        enable_object(my_dropdown)
+        disable_object(my_input_field)
+    elif temp == methods[2]:
+        print("2")
+        disable_object(my_dropdown)
+        enable_object(my_input_field)
