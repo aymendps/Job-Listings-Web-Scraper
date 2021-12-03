@@ -31,13 +31,13 @@ if __name__ == '__main__':
     dropdown1 = main_window.special_main_window_dropdown(methods, 45, dropdown2, field0)
     button0 = main_window.add_button(seek_button_text)
 
-    text0.pack()
-    dropdown0.pack()
-    text1.pack()
+    text1.pack(fill="both")
     dropdown1.pack()
-    text2.pack()
+    text0.pack(fill="both")
+    dropdown0.pack()
+    text2.pack(fill="both")
     dropdown2.pack()
-    text3.pack()
+    text3.pack(fill="both")
     field0.pack()
     mw.set_position(button0, 150, 480)
 

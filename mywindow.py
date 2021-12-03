@@ -58,7 +58,7 @@ class myWindow:
         var.set(my_list[0])
 
         dropdown = tk.OptionMenu(self.window, var, *my_list,
-                                 command=lambda x: set_method(var, my_list, my_dropdown, my_field))
+                                 command=lambda x: update_dropdowns(var, my_list, my_dropdown, my_field))
 
         dropdown.config(bg=self.bg_hex_color, fg=self.text_color, font=("Arial", 10, "bold"),
                         activeforeground=self.bg_hex_color, width=width, direction='right')
@@ -98,9 +98,8 @@ def get_dropdown_value(var):
     return temp
 
 
-def set_method(var, methods, my_dropdown, my_input_field):
+def update_dropdowns(var, methods, my_dropdown, my_input_field):
     temp = var.get()
-    print("t")
     if temp == methods[0]:
         print("0")
         disable_object(my_dropdown)
