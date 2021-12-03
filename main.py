@@ -7,7 +7,7 @@ title = "Job Seeker - Apply Right"
 logo_path = "./assets/logo.png"
 bg_hex_color = '#eb1087'
 text_color = 'white'
-websites = ["RealPython JobSite", "LinkedIn", "Tanit Jobs"]
+websites = ["RP Jobsite", "LinkedIn", "Indeed"]
 websites_title = "Website to use:"
 methods = ["Seek everything", "Seek a category", "Seek a keyword"]
 methods_title = "Method to use:"
@@ -22,10 +22,10 @@ if __name__ == '__main__':
 
     main_window.add_image(logo_path)
     text0 = main_window.add_text(websites_title, 'w')
-    dropdown0 = main_window.add_dropdown(websites, 45)
+    dropdown0, varw = main_window.add_dropdown(websites, 45)
     text1 = main_window.add_text(methods_title, 'w')
     text2 = main_window.add_text(categories_title, 'w')
-    dropdown2 = main_window.add_dropdown(categories, 45)
+    dropdown2, varc = main_window.add_dropdown(categories, 45)
     text3 = main_window.add_text(keyword_title, 'w')
     field0 = main_window.add_input_field(width=39)
     dropdown1 = main_window.special_main_window_dropdown(methods, 45, dropdown2, field0)
@@ -48,6 +48,7 @@ if __name__ == '__main__':
     mw.add_padding(button0, 10, 10)
 
     mw.disable_object(dropdown2)
-    mw.disable_object(field0)
+    mw.disable_object(field0) 
+    button0.configure(command=lambda : mw.start_scraping(varw,varc,field0))
 
     main_window.start_window()
