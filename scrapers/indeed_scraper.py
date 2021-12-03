@@ -31,8 +31,9 @@ def find_all_jobs():
 
     #Save result
     df = pandas.DataFrame({"Jobs title": jobs_title, "Company title": companies_name, "Locations": locations})
-    df.to_csv("./results/INDEED_A_Results.csv")
+    df.to_csv("./results/INDEED_A_Results.csv",index=False)
     print("INDEED: Finished scraping.")
+    return df
 
 def find_keyword_jobs(keyword):
     url = "https://www.indeed.com/jobs?q=" + keyword + "&l=United%20States"
@@ -63,5 +64,6 @@ def find_keyword_jobs(keyword):
 
     #Save result
     df = pandas.DataFrame({"Jobs title": jobs_title, "Company title": companies_name, "Locations": locations})
-    df.to_csv("./results/INDEED_K_Results.csv")
+    df.to_csv("./results/INDEED_K_Results.csv",index=False)
     print("INDEED: Finished scraping.")
+    return df

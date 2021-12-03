@@ -1,35 +1,24 @@
-import mywindow as mw
+from tkinter import Tk
+from tkinter import Toplevel
+from numpy import tan
+import main_window as mw
 
-# main_window parameters:
-width = 400
-height = 550
-title = "Job Seeker - Apply Right"
-logo_path = "./assets/logo.png"
-bg_hex_color = '#eb1087'
-text_color = 'white'
-websites = ["RP Jobsite", "LinkedIn", "Indeed"]
-websites_title = "Website to use:"
-methods = ["Seek everything", "Seek a category", "Seek a keyword"]
-methods_title = "Method to use:"
-categories = ["Software & Data", "Science", "Engineering", "Sales & Marketing", "Healthcare", "Business",
-              "Education", "Arts & Media", "Technology", "Social Services", "Construction"]
-categories_title = "Categories / Fields:"
-keyword_title = "Seek Keyword:"
-seek_button_text = "Seek now!"
+# pip install -r requirements.txt to install all packages necessary.
+
 
 if __name__ == '__main__':
-    main_window = mw.myWindow(w=width, h=height, title=title, bg_hex_color=bg_hex_color, text_color=text_color)
+    main_window = mw.main_window(w=mw.WIDTH, h=mw.HEIGHT, title=mw.TITLE, bg_hex_color=mw.BG_HEX_COLOR, text_color=mw.TEXT_COLOR)
 
-    main_window.add_image(logo_path)
-    text0 = main_window.add_text(websites_title, 'w')
-    dropdown0, varw = main_window.add_dropdown(websites, 45)
-    text1 = main_window.add_text(methods_title, 'w')
-    text2 = main_window.add_text(categories_title, 'w')
-    dropdown2, varc = main_window.add_dropdown(categories, 45)
-    text3 = main_window.add_text(keyword_title, 'w')
+    main_window.add_image(mw.LOGO_PATH)
+    text0 = main_window.add_text(mw.WEBSITES_TITLE, 'w')
+    dropdown0, varw = main_window.add_dropdown(mw.WEBSITES, 45)
+    text1 = main_window.add_text(mw.METHODS_TITLE, 'w')
+    text2 = main_window.add_text(mw.CATEGORIES_TITLE, 'w')
+    dropdown2, varc = main_window.add_dropdown(mw.CATEGORIES, 45)
+    text3 = main_window.add_text(mw.KEYWORD_TITLE, 'w')
     field0 = main_window.add_input_field(width=39)
-    dropdown1 = main_window.special_main_window_dropdown(methods, 45, dropdown2, field0)
-    button0 = main_window.add_button(seek_button_text)
+    dropdown1 = main_window.special_main_window_dropdown(mw.METHODS, 45, dropdown2, field0)
+    button0 = main_window.add_button(mw.SEEK_BUTTON_TEXT)
 
     text1.pack(fill="both")
     dropdown1.pack()
@@ -50,5 +39,5 @@ if __name__ == '__main__':
     mw.disable_object(dropdown2)
     mw.disable_object(field0) 
     button0.configure(command=lambda : mw.start_scraping(varw,varc,field0))
-
+    
     main_window.start_window()

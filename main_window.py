@@ -1,20 +1,36 @@
 from os import error
-import tkinter as tk
+from tkinter import *
 from PIL import Image, ImageTk
-
 from scrapers import indeed_scraper as indeed
 from scrapers import linkedin_scraper as linkedin
 from scrapers import rpj_scraper as rpj
+import secondary_window as sw
 
-websites = ["RP Jobsite", "LinkedIn", "Indeed"]
+
+WIDTH = 400
+HEIGHT = 550
+TITLE = "Job Seeker - Apply Right"
+LOGO_PATH = "./assets/logo.png"
+BG_HEX_COLOR = '#eb1087'
+TEXT_COLOR = 'white'
+WEBSITES = ["RP Jobsite", "LinkedIn", "Indeed"]
+WEBSITES_TITLE = "Website to use:"
+METHODS = ["Seek everything", "Seek a category", "Seek a keyword"]
+METHODS_TITLE = "Method to use:"
+CATEGORIES = ["Software & Data", "Science", "Engineering", "Sales & Marketing", "Healthcare", "Business",
+              "Education", "Arts & Media", "Technology", "Social Services", "Construction"]
+CATEGORIES_TITLE = "Categories / Fields:"
+KEYWORD_TITLE = "Seek Keyword:"
+SEEK_BUTTON_TEXT = "Seek now!"
+
 
 current_method = "method_all"
 current_website = "RP Jobsite"
 current_category = "Software & Data"
 current_keyword = ""
 
-class myWindow:
-    window = tk.Tk()
+class main_window:
+    window = Tk()
 
     def __init__(self, w, h, title, bg_hex_color, text_color):
         self.w = w
@@ -45,19 +61,19 @@ class myWindow:
         # tk.Label(self.window, text="Username").place(x=40, y=60)
         data = Image.open(image_path)
         image = ImageTk.PhotoImage(data)
-        my_label = tk.Label(self.window, image=image, bg=self.bg_hex_color)
+        my_label = Label(self.window, image=image, bg=self.bg_hex_color)
         my_label.image = image
         my_label.pack()
 
     def add_text(self, some_text, anchor):  # anchor? align text: 'w' => right 'e' => left 'center' => center
-        my_text = tk.Label(self.window, text=some_text, bg=self.bg_hex_color, fg=self.text_color,
+        my_text = Label(self.window, text=some_text, bg=self.bg_hex_color, fg=self.text_color,
                            font=("Arial", 12, "bold"), anchor=anchor)
         return my_text
 
     def add_dropdown(self, my_list, width):
-        var = tk.StringVar(self.window)
+        var = StringVar(self.window)
         var.set(my_list[0])
-        dropdown = tk.OptionMenu(self.window, var, *my_list)
+        dropdown = OptionMenu(self.window, var, *my_list)
         dropdown.config(bg=self.bg_hex_color, fg=self.text_color, font=("Arial", 10, "bold"),
                         activeforeground=self.bg_hex_color, width=width, direction='right')
 
@@ -65,10 +81,10 @@ class myWindow:
         return dropdown, var
 
     def special_main_window_dropdown(self, my_list, width, my_dropdown, my_field):
-        var = tk.StringVar(self.window)
+        var = StringVar(self.window)
         var.set(my_list[0])
 
-        dropdown = tk.OptionMenu(self.window, var, *my_list,
+        dropdown = OptionMenu(self.window, var, *my_list,
                                  command=lambda x: update_dropdowns(var, my_list, my_dropdown, my_field))
 
         dropdown.config(bg=self.bg_hex_color, fg=self.text_color, font=("Arial", 10, "bold"),
@@ -78,15 +94,14 @@ class myWindow:
         return dropdown
 
     def add_input_field(self, width):
-        field = tk.Entry(self.window, width=width, font=("Arial", 12, "bold"), fg='#4c1b45',
+        field = Entry(self.window, width=width, font=("Arial", 12, "bold"), fg='#4c1b45',
                          disabledbackground='#4c1b45')
         return field
 
     def add_button(self, button_text):
-        button = tk.Button(self.window, text=button_text, bg=self.bg_hex_color, font=("Arial", 10, "bold"),
+        button = Button(self.window, text=button_text, bg=self.bg_hex_color, font=("Arial", 10, "bold"),
                            fg=self.text_color, activeforeground=self.bg_hex_color, relief="groove", bd=5)
         return button
-
 
 def set_position(my_object, x, y):
     my_object.place(x=x, y=y)
@@ -139,23 +154,39 @@ def start_scraping(varw,varc,field):
         scrape_by_keyword()
 
 def scrape_all():
-    global current_website, websites
-    if current_website == websites[0]:
-        rpj.find_all_jobs()
-    elif current_website == websites[1]:
-        linkedin.find_all_jobs()
-    elif current_website == websites[2]:
-        indeed.find_all_jobs()
-    else:
-        print("Error occured when passing current website")    
-
-def scrape_by_keyword():
-    global current_website, websites
-    if current_website == websites[0]:
-        rpj.find_keyword_jobs(current_keyword)
-    elif current_website == websites[1]:
-        linkedin.find_keyword_jobs(current_keyword)
-    elif current_website == websites[2]:
-        indeed.find_keyword_jobs(current_keyword)
+    global current_website
+    if current_website == WEBSITES[0]:
+        df = rpj.find_all_jobs()
+        t = "Results of: RPJ Search All"
+    elif current_website == WEBSITES[1]:
+        df = linkedin.find_all_jobs()
+        t = "Results of: LINEKDIN Search All"
+    elif current_website == WEBSITES[2]:
+        df = indeed.find_all_jobs()
+        t = "Results of: INDEED Search All"
     else:
         print("Error occured when passing current website")
+        df = None
+    if df is not None:
+        table_window = sw.secondary_window(root=main_window.window,w=1000, h=550, title=t, bg_hex_color=BG_HEX_COLOR, text_color=TEXT_COLOR)
+        table_window.add_table(df)
+        table_window.window.grab_set()
+
+def scrape_by_keyword():
+    global current_website
+    if current_website == WEBSITES[0]:
+        df = rpj.find_keyword_jobs(current_keyword)
+        t = "Results of: RPJ Search By Keyword"
+    elif current_website == WEBSITES[1]:
+        df = linkedin.find_keyword_jobs(current_keyword)
+        t = "Results of: LINEKDIN Search By Keyword"
+    elif current_website == WEBSITES[2]:
+        df = indeed.find_keyword_jobs(current_keyword)
+        t = "Results of: INDEED Search By Keyword"
+    else:
+        print("Error occured when passing current website")
+        df = None
+    if df is not None:
+        table_window = sw.secondary_window(root=main_window.window,w=1000, h=550, title=t, bg_hex_color=BG_HEX_COLOR, text_color=TEXT_COLOR)
+        table_window.add_table(df)
+        table_window.window.grab_set()

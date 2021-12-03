@@ -73,16 +73,16 @@ def find_all_jobs():
         job_link.append(job.find_element(By.CSS_SELECTOR, 'a').get_attribute('href'))
 
     job_data = pd.DataFrame({
-        'ID': job_id,
         'Date': date,
         'Company': company_name,
         'Title': job_title,
         'Location': location,
         'Link': job_link
     })
-    job_data.to_csv("./results/LINKEDIN_A_Results.csv")
+    job_data.to_csv("./results/LINKEDIN_A_Results.csv",index=False)
     driver.quit()
     print("LINKEDIN: Finished scraping.")
+    return job_data
 
 def find_keyword_jobs(keyword):
     
@@ -124,13 +124,13 @@ def find_keyword_jobs(keyword):
         job_link.append(job.find_element(By.CSS_SELECTOR, 'a').get_attribute('href'))
 
     job_data = pd.DataFrame({
-        'ID': job_id,
         'Date': date,
         'Company': company_name,
         'Title': job_title,
         'Location': location,
         'Link': job_link
     })
-    job_data.to_csv("./results/LINKEDIN_K_Results.csv")
+    job_data.to_csv("./results/LINKEDIN_K_Results.csv",index=False)
     driver.quit()
     print("LINKEDIN: Finished scraping.")
+    return job_data

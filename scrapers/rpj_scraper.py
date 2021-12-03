@@ -29,9 +29,9 @@ def find_all_jobs():
 
     df = pandas.DataFrame({'Job Title': title_element, 'Company Name': company_element,
                            'Location': location_element, 'Posted on': time_element, 'Apply here': link_element})
-
-    df.to_csv("./results/RPJ_A_Results.csv")
+    df.to_csv("./results/RPJ_A_Results.csv",index=False)
     print("RPJ: Finished scraping.")
+    return df
 
 
 def find_keyword_jobs(keyword):
@@ -58,5 +58,6 @@ def find_keyword_jobs(keyword):
     df = pandas.DataFrame({'Job Title': title_element, 'Company Name': company_element,
                            'Location': location_element, 'Posted on': time_element, 'Apply here': link_element})
 
-    df.to_csv("./results/RPJ_K_Results.csv")
+    df.to_csv("./results/RPJ_K_Results.csv",index=False)
     print("RPJ: Finished scraping.")
+    return df
