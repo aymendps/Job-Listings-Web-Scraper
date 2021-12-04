@@ -31,3 +31,8 @@ class secondary_window():
         table.rowheader.grid_forget()
         table.rowindexheader.grid_forget()
         return table
+    
+    def add_text(self, some_text, anchor):  # anchor? align text: 'w' => right 'e' => left 'center' => center
+        my_text = Label(self.window, text=some_text, bg=self.bg_hex_color, fg=self.text_color,
+                           font=("Arial", 12, "bold"), anchor=anchor)
+        return my_text
