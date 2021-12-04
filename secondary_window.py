@@ -22,6 +22,7 @@ class secondary_window():
         self.window.resizable(False, False)
         self.window['background'] = self.bg_hex_color
         
+        
     def add_table(self, df):
         table = Table(self.window, dataframe=df, editable=False, enable_menus=False, showtoolbar=False, showstatusbar=True, font=("Arial", 8, "bold"),
                       align= 'center', colheadercolor='#4c1b45', colselectedcolor='#4c1b45',cellbackgr=self.bg_hex_color, textcolor='white',

@@ -51,6 +51,8 @@ class main_window:
         self.window.title(self.title)
         self.window.resizable(False, False)
         self.window['background'] = self.bg_hex_color
+        image = PhotoImage(file='./assets/logo_icon.png')
+        self.window.wm_iconphoto(True, image)
 
     def get_window_position(self):
         pos_w = int(self.window.winfo_screenwidth() / 2 - self.w / 2)
