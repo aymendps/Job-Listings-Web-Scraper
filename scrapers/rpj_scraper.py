@@ -19,16 +19,18 @@ def find_all_jobs():
     company_element = []
     location_element = []
     time_element = []
-    link_element = []
+    # link_element = []
     for job_element in job_elements:
         title_element.append(job_element.find("h2", class_="title").text.strip())
         company_element.append(job_element.find("h3", class_="company").text.strip())
         location_element.append(job_element.find("p", class_="location").text.strip())
         time_element.append(job_element.find("p", class_="is-small has-text-grey").text.strip())
-        link_element.append(job_element.find_all("a")[1]["href"])
+        # link_element.append(job_element.find_all("a")[1]["href"])
 
+    # df = pandas.DataFrame({'Job Title': title_element, 'Company Name': company_element,
+                           #'Location': location_element, 'Posted on': time_element, 'Apply here': link_element})
     df = pandas.DataFrame({'Job Title': title_element, 'Company Name': company_element,
-                           'Location': location_element, 'Posted on': time_element, 'Apply here': link_element})
+                           'Location': location_element, 'Posted on': time_element})
     df.to_csv("./results/RPJ_A_Results.csv",index=False)
     print("RPJ: Finished scraping.")
     return df
@@ -47,16 +49,18 @@ def find_keyword_jobs(keyword):
     company_element = []
     location_element = []
     time_element = []
-    link_element = []
+    # link_element = []
     for element in job_keyword_elements:
         title_element.append(element.find("h2", class_="title").text.strip())
         company_element.append(element.find("h3", class_="company").text.strip())
         location_element.append(element.find("p", class_="location").text.strip())
         time_element.append(element.find("p", class_="is-small has-text-grey").text.strip())
-        link_element.append(element.find_all("a")[1]["href"])
+        # link_element.append(element.find_all("a")[1]["href"])
 
+    # df = pandas.DataFrame({'Job Title': title_element, 'Company Name': company_element,
+                           #'Location': location_element, 'Posted on': time_element, 'Apply here': link_element})
     df = pandas.DataFrame({'Job Title': title_element, 'Company Name': company_element,
-                           'Location': location_element, 'Posted on': time_element, 'Apply here': link_element})
+                           'Location': location_element, 'Posted on': time_element})
 
     df.to_csv("./results/RPJ_K_Results.csv",index=False)
     print("RPJ: Finished scraping.")
