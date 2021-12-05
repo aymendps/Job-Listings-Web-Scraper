@@ -43,8 +43,10 @@ def find_all_jobs():
     print("LINKEDIN: Scraping all..")
     
     no_of_jobs = int(driver.find_element(By.CSS_SELECTOR, 'h1>span').get_attribute('innerText'))
+    if no_of_jobs > 200:
+        no_of_jobs = 200
     i = 2
-    while i <= int(no_of_jobs/100)+1:
+    while i <= int(no_of_jobs/25)+1:
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight );")
         i = i + 1
         try:
@@ -73,11 +75,11 @@ def find_all_jobs():
         job_link.append(job.find_element(By.CSS_SELECTOR, 'a').get_attribute('href'))
 
     job_data = pd.DataFrame({
-        'Date': date,
+        'Title': job_title,       
         'Company': company_name,
-        'Title': job_title,
         'Location': location,
-        'Link': job_link
+        'Date': date,
+        'Apply Here': job_link
     })
     job_data.to_csv("./results/LINKEDIN_A_Results.csv",index=False)
     driver.quit()
@@ -94,8 +96,11 @@ def find_keyword_jobs(keyword):
     print("LINKEDIN: Scraping by keyword..")
     
     no_of_jobs = int(driver.find_element(By.CSS_SELECTOR, 'h1>span').get_attribute('innerText'))
+    if no_of_jobs > 200:
+        no_of_jobs = 200    
+    
     i = 2
-    while i <= int(no_of_jobs/100)+1:
+    while i <= int(no_of_jobs/25)+1:
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight );")
         i = i + 1
         try:
@@ -124,11 +129,11 @@ def find_keyword_jobs(keyword):
         job_link.append(job.find_element(By.CSS_SELECTOR, 'a').get_attribute('href'))
 
     job_data = pd.DataFrame({
-        'Date': date,
-        'Company': company_name,
         'Title': job_title,
+        'Company': company_name,
         'Location': location,
-        'Link': job_link
+        'Date': date,
+        'Apply Here': job_link
     })
     job_data.to_csv("./results/LINKEDIN_K_Results.csv",index=False)
     driver.quit()

@@ -18,7 +18,9 @@ WEBSITES_TITLE = "Website to use:"
 METHODS = ["Seek everything", "Seek a category", "Seek a keyword"]
 METHODS_TITLE = "Method to use:"
 CATEGORIES = ["Software & Data", "Science", "Engineering", "Sales & Marketing", "Healthcare", "Business",
-              "Education", "Arts & Media", "Technology", "Social Services", "Construction"]
+              "Education", "Media", "Technology", "Social Services"]
+CATEGORIES_TRANSLATE = ["data", "science", "sngineering", "marketing", "health", "business",
+              "education", "media", "technology", "social"]
 CATEGORIES_TITLE = "Categories / Fields:"
 KEYWORD_TITLE = "Seek Keyword:"
 SEEK_BUTTON_TEXT = "Seek now!"
@@ -151,7 +153,7 @@ def start_scraping(varw,varc,field):
     if current_method == "method_all":
         scrape_all()
     elif current_method == "method_category":
-        print("method_category")
+        scrape_by_category()
     elif current_method == "method_keyword":
         scrape_by_keyword()
 
@@ -173,6 +175,47 @@ def scrape_all():
         table_window = sw.secondary_window(root=main_window.window,w=1000, h=550, title=t, bg_hex_color=BG_HEX_COLOR, text_color=TEXT_COLOR)
         table_window.add_table(df)
         table_window.window.grab_set()
+        
+def category_to_keyword(category):
+    if category == CATEGORIES[0]:
+        return CATEGORIES_TRANSLATE[0]
+    if category == CATEGORIES[1]:
+        return CATEGORIES_TRANSLATE[1]
+    if category == CATEGORIES[2]:
+        return CATEGORIES_TRANSLATE[2]    
+    if category == CATEGORIES[3]:
+        return CATEGORIES_TRANSLATE[3]
+    if category == CATEGORIES[4]:
+        return CATEGORIES_TRANSLATE[4]
+    if category == CATEGORIES[5]:
+        return CATEGORIES_TRANSLATE[5]
+    if category == CATEGORIES[6]:
+        return CATEGORIES_TRANSLATE[6]
+    if category == CATEGORIES[7]:
+        return CATEGORIES_TRANSLATE[7]
+    if category == CATEGORIES[8]:
+        return CATEGORIES_TRANSLATE[8]
+    if category == CATEGORIES[9]:
+        return CATEGORIES_TRANSLATE[9]
+def scrape_by_category():
+    global current_website
+    if current_website == WEBSITES[0]:
+        df = rpj.find_keyword_jobs(category_to_keyword(current_category))
+        t = "Results of: RPJ Search By Category"
+    elif current_website == WEBSITES[1]:
+        df = linkedin.find_keyword_jobs(category_to_keyword(current_category))
+        t = "Results of: LINEKDIN Search By Category"
+    elif current_website == WEBSITES[2]:
+        df = indeed.find_keyword_jobs(category_to_keyword(current_category))
+        t = "Results of: INDEED Search By Category"
+    else:
+        print("Error occured when passing current website")
+        df = None
+    if df is not None:
+        table_window = sw.secondary_window(root=main_window.window,w=1000, h=550, title=t, bg_hex_color=BG_HEX_COLOR, text_color=TEXT_COLOR)
+        table_window.add_table(df)
+        table_window.window.grab_set()
+
 
 def scrape_by_keyword():
     global current_website

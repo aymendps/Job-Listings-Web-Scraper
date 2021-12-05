@@ -37,7 +37,8 @@ if __name__ == '__main__':
     mw.add_padding(button0, 10, 10)
 
     mw.disable_object(dropdown2)
-    mw.disable_object(field0) 
+    mw.disable_object(field0)
+     
     button0.configure(command=lambda : mw.start_scraping(varw,varc,field0))
     
     main_window.start_window()

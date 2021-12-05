@@ -24,7 +24,7 @@ class secondary_window():
         
         
     def add_table(self, df):
-        table = Table(self.window, dataframe=df, editable=False, enable_menus=False, showtoolbar=False, showstatusbar=True, font=("Arial", 8, "bold"),
+        table = Table(self.window, dataframe=df, editable=True, enable_menus=False, showtoolbar=False, showstatusbar=True, font=("Arial", 8, "bold"),
                       align= 'center', colheadercolor='#4c1b45', colselectedcolor='#4c1b45',cellbackgr=self.bg_hex_color, textcolor='white',
                       rowselectedcolor= '#4c1b45', boxoutlinecolor=self.bg_hex_color)
         table.show()
