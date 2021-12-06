@@ -119,8 +119,11 @@ def find_keyword_jobs(keyword):
     location = []
     date = []
     job_link = []
+    i = 0
+    length = len(jobs)
     for job in jobs:
-
+        print(str(i*100/length) + "%")
+        i =i + 1
         job_id.append(job.get_attribute('data - id'))
         job_title.append(job.find_element(By.CSS_SELECTOR, 'h3').get_attribute('innerText'))
         company_name.append(job.find_element(By.CSS_SELECTOR, 'h4').get_attribute('innerText'))

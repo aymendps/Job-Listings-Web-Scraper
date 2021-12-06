@@ -3,7 +3,7 @@ import pandas
 import requests
 
 def find_all_jobs():
-    url = "https://www.indeed.com/jobs?q=all&l=United%20States"
+    url = "https://www.indeed.com/jobs?q=job&l=United%20States"
     jobs_title = []
     companies_name = []
     locations = []
@@ -12,6 +12,7 @@ def find_all_jobs():
     print("INDEED: Scraping all..")
     sum=0
     while sum<=10:
+        print(str(sum*10) + "%")
         sum=sum+1
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -53,6 +54,7 @@ def find_keyword_jobs(keyword):
     print("INDEED: Scraping by keyword..")
     sum=0
     while sum<=10:
+        print(str(sum*10) + "%")
         sum=sum+1
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
